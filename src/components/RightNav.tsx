@@ -2,10 +2,10 @@ import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuL
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/", label: "Главная" },
-  { href: "/catalog", label: "Каталог" },
-  { href: "/about", label: "О нас" },
-  { href: "/contact", label: "Контакты" },
+  { href: "/profile", label: "Профиль" },
+  { href: "/featured", label: "Избранное" },
+  { href: "/cart", label: "Корзина" },
+
 ];
 
 export default function MainNav() {
@@ -14,7 +14,7 @@ export default function MainNav() {
       <NavigationMenuList>
         {navItems.map((item) => (
           <NavigationMenuItem key={item.href}>
-            <NavigationMenuLink className={cn("px-10 py-6 text-sm font-medium hover:underline text-black")} href={item.href}>
+            <NavigationMenuLink className={cn("px-3 py-[6px] text-sm font-medium text-black hover:underline")} href={item.href}>
               {item.label}
             </NavigationMenuLink>
           </NavigationMenuItem>

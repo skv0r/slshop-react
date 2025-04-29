@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 
 
-export default function MainContent() {
+export default function Banner() {
     return (
-        <div className="rounded-[12px] bg-[#6366F1]">
+    <div className="rounded-[12px] bg-[#6366F1]  mx-[22px] mb-16">
          <div className="flex max-h-[500px] px-[190px]">
             <div className="flex flex-col justify-between py-[110px]">
                 <h1 className="font-extrabold text-5xl text-white leading-1.25em">Бьюти-зона с<br />гаджетами</h1>

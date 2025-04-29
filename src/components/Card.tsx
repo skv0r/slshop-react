@@ -1,13 +1,6 @@
-import {
-    Menubar,
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarSeparator,
-    MenubarShortcut,
-    MenubarTrigger,
-  } from "@/components/ui/menubar"
-  
+import { ChevronRight } from "lucide-react";
+import { Button } from "./ui/button";
+
 
 interface CardProps {
     imageUrl: string;
@@ -32,27 +25,16 @@ const Card: React.FC<CardProps> = ({
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
                 </a>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{description}</p>
-                <div className="flex justify-between">
-                    <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        {buttonText}
-                        <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
+                <div className="flex items-center justify-between">
+                <Button className=" max-w-50 text-[14px] font-medium" variant="default">
+                    {buttonText} <ChevronRight/> 
+                </Button>
 
-                    <Menubar>
-                        <MenubarMenu>
-                            -1
-                        </MenubarMenu>
-                        <MenubarMenu>
-                            
-                            +1
-                            
-                        </MenubarMenu>
-                        <MenubarMenu>
-                            +1
-                        </MenubarMenu>
-                    </Menubar>
+                    <div className="flex items-center justify-between rounded-[6px] border-[CBD5E1] w-[109px] h-[40px] border-1 p-1">
+                        <button className="size-8">-</button>
+                        <span className="rounded-md bg-[#F1F5F9] px-3 py-1.5">0</span>
+                        <button className="size-8 bg-white">+</button>
+                    </div>
                 </div>
             </div>
         </div>

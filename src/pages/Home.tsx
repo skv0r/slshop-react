@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Main from "@/components/Main";
 
@@ -8,6 +9,7 @@ export default function Home() {
       <main className="mx-auto max-w-[1440px] py-16">
         <Main/>
       </main>
+      <Footer/>
     </div>
   );
 }

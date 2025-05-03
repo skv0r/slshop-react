@@ -1,15 +1,15 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Main from "@/components/Main";
+import About from "@/components/main/About";
+import Banner from "@/components/main/Banner";
+import PopularProducts from "@/components/main/PopularProducts";
 
 export default function Home() {
   return (
     <div className="w-screen min-h-screen bg-gray-50">
-      <Header />
       <main className="mx-auto max-w-[1440px] py-16">
-        <Main/>
+        <Banner />
+        <PopularProducts />
+        <About />
       </main>
-      <Footer/>
     </div>
   );
 }

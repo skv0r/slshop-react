@@ -1,54 +1,112 @@
-# React + TypeScript + Vite
+# SLShop React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Современный интернет-магазин, построенный с использованием React, TypeScript и современных веб-технологий.
 
-Currently, two official plugins are available:
+## 🚀 Технологии
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React](https://reactjs.org/) - Библиотека для создания пользовательских интерфейсов
+- [TypeScript](https://www.typescriptlang.org/) - Типизированный JavaScript
+- [Vite](https://vitejs.dev/) - Современный инструмент сборки
+- [Tailwind CSS](https://tailwindcss.com/) - Утилитарный CSS фреймворк
+- [Shadcn UI](https://ui.shadcn.com/) - Переиспользуемые компоненты на основе Radix UI
+- [React Router](https://reactrouter.com/) - Маршрутизация в React приложениях
 
-## Expanding the ESLint configuration
+## 📦 Установка
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Клонируйте репозиторий:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/skv0r/slshop-react.git
+cd slshop-react
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Установите зависимости:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
 ```
+
+3. Создайте файл `.env` на основе `.env.example` и заполните необходимые переменные окружения.
+
+## 🛠️ Разработка
+
+Запуск сервера разработки:
+
+```bash
+npm run dev
+```
+
+Сборка проекта:
+
+```bash
+npm run build
+```
+
+Проверка линтером:
+
+```bash
+npm run lint
+```
+
+Предпросмотр собранного проекта:
+
+```bash
+npm run preview
+```
+
+## 📁 Структура проекта
+
+```
+src/
+├── app/          # Основная логика приложения
+├── assets/       # Статические ресурсы
+├── components/   # Переиспользуемые компоненты
+├── features/     # Функциональные модули
+├── hooks/        # Пользовательские React хуки
+├── layouts/      # Компоненты макетов
+├── lib/          # Вспомогательные библиотеки
+├── pages/        # Компоненты страниц
+├── styles/       # Глобальные стили
+├── types/        # TypeScript типы
+└── utils/        # Вспомогательные функции
+```
+
+## 🎨 Компоненты
+
+Проект использует компоненты из библиотеки Shadcn UI, которые обеспечивают:
+
+- Красивый и современный дизайн
+- Доступность (a11y)
+- Кастомизируемость
+- Кроссбраузерность
+- Поддержку клавиатурной навигации
+- Легкость в использовании и настройке
+
+## 🧪 Тестирование
+
+Для запуска тестов:
+
+```bash
+npm test
+```
+
+## 📝 Линтинг и форматирование
+
+Проект использует ESLint для линтинга и Prettier для форматирования кода.
+
+## 🤝 Вклад в проект
+
+1. Форкните репозиторий
+2. Создайте ветку для ваших изменений (`git checkout -b feature/amazing-feature`)
+3. Зафиксируйте ваши изменения (`git commit -m 'Add some amazing feature'`)
+4. Отправьте изменения в ваш форк (`git push origin feature/amazing-feature`)
+5. Откройте Pull Request
+
+## 📄 Лицензия
+
+Этот проект распространяется под лицензией MIT. Подробности в файле [LICENSE](LICENSE).
+
+## 👥 Авторы
+
+- Григорий Буренков - [GitHub](https://github.com/skv0r)
+

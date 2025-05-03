@@ -11,11 +11,19 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "@": "src",
+    "@components": "src/shared/ui",
+    "@utils": "src/shared/utils",
+    "@ui": "src/shared/ui",
+    "@lib": "src/shared/lib",
+    "@hooks": "src/shared/hooks",
+    "@entities": "src/entities",
+    "@features": "src/features",
+    "@pages": "src/pages",
+    "@app": "src/app",
+    "@api": "src/shared/api",
+    "@assets": "src/assets",
+    "@styles": "src/styles"
   },
   "iconLibrary": "lucide"
 }

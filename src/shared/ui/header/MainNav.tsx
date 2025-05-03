@@ -1,5 +1,10 @@
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from "@/shared/ui/navigation-menu";
+import { cn } from "@/shared/lib/utils";
 
 const navItems = [
   { href: "/", label: "Главная" },
@@ -14,7 +19,12 @@ export default function MainNav() {
       <NavigationMenuList>
         {navItems.map((item) => (
           <NavigationMenuItem key={item.href}>
-            <NavigationMenuLink className={cn("px-10 py-6 text-sm font-medium hover:underline text-black")} href={item.href}>
+            <NavigationMenuLink
+              className={cn(
+                "px-10 py-6 text-sm font-medium hover:underline text-black"
+              )}
+              href={item.href}
+            >
               {item.label}
             </NavigationMenuLink>
           </NavigationMenuItem>

@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/shared/ui/button";
 
 interface CardProps {
   imageUrl: string;

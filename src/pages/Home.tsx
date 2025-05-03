@@ -1,6 +1,6 @@
-import About from "@/components/main/About";
-import Banner from "@/components/main/Banner";
-import PopularProducts from "@/components/main/PopularProducts";
+import About from "@/shared/ui/main/About";
+import Banner from "@/shared/ui/main/Banner";
+import PopularProducts from "@/shared/ui/main/PopularProducts";
 
 export default function Home() {
   return (

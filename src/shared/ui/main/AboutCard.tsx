@@ -25,9 +25,9 @@ const AboutCard: React.FC<CardProps> = ({
 }) => {
   return (
     <div
-      className={`max-w-[433px] p-6 flex border-1 border-[${
-        isBordered ? "#6366F1" : "#CBD5E1"
-      }] rounded-md`}
+      className={`max-w-[433px] p-6 flex border-1 rounded-md ${
+        isBordered ? "border-indigo-500" : "border-slate-300"
+      }`}
     >
       <div
         className="

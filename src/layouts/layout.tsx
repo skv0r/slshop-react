@@ -4,10 +4,12 @@ import Footer from "@/shared/ui/footer/Footer";
 
 export default function Layout() {
   return (
-    <>
+    <div className="w-screen min-h-screen bg-gray-50">
       <Header />
-      <Outlet />
+      <main className="mx-auto max-w-[1440px] py-16">
+        <Outlet />
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }

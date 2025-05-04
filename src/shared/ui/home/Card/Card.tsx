@@ -25,12 +25,18 @@ const Card: React.FC<CardProps> = ({
       } bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700`}
     >
       <a href="#">
-        <img className="rounded-t-lg" src={imageUrl} alt="" />
+        <div className="h-[230px] bg-gray-500 flex items-center justify-center rounded-t-lg">
+          <img
+            className="w-full h-full object-contain rounded-t-lg"
+            src={imageUrl}
+            alt={title}
+          />
+        </div>
       </a>
       <div className="p-5">
         <a href="#">
           {variant === "compact" ? (
-            <h5 className="flex justify-between mb-2 text-2xl font-bold tracking-tight dark:text-white">
+            <h5 className="flex justify-between mb-2 text-[20px] font-semibold tracking-tight dark:text-white">
               <span className="text-gray-900">{title}</span>
               <span className="text-gray-900">{price}</span>
             </h5>

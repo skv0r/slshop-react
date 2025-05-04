@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
-import Layout from "@/layouts/layout";
 import Catalog from "@/pages/Catalog";
+import Layout from "@/shared/ui/layout/layout";
 
 export enum Routes {
   Home = "/",

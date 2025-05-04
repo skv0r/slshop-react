@@ -1,5 +1,4 @@
-import GridCards from "@/shared/ui/catalog/GridCards/GridCards";
-import Filter from "@/shared/ui/catalog/Filter/Filter";
+import { Filter, GridCards } from "@/shared/ui/sections/catalog";
 
 const Catalog = () => {
   return (

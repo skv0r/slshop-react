@@ -12,8 +12,8 @@
   },
   "aliases": {
     "@": "src",
-    "@components": "src/shared/ui",
-    "components": "src/shared/ui",
+    "@components": "src/shared/ui/components",
+    "components": "src/shared/ui/components",
     "@utils": "src/shared/utils",
     "utils": "src/shared/utils",
     "@ui": "src/shared/ui",

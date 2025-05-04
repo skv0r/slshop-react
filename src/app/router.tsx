@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import Catalog from "@/pages/Catalog";
-import Layout from "@/shared/ui/layout/layout";
-
+import Layout from "@/shared/ui/layout/Layout";
+import NotFound from "@/pages/NotFound";
 export enum Routes {
   Home = "/",
   Catalog= "/catalog",
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: Routes.Catalog, element: <Catalog /> },
-      { path: Routes.NotFound, element: <div>Not Found</div> },
+      { path: Routes.NotFound, element: <NotFound /> },
     ],
   },
 ]);

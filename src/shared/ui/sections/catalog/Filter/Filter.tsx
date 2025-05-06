@@ -2,12 +2,25 @@ import { SearchBar,  Button } from "@/shared/ui/components";
 import { X } from "lucide-react";
 import PriceRangeFilter from "./PriceFilter";
 import { useState } from "react";
+import { CategoryFilter } from "./CatergoryFilter";
 
-
+const categories = ["Clothing", "Footwear", "Electronics", "Bags"]
 
 const Filter = () => {
 
     const [priceRange, setPriceRange] = useState<number[]>([0, 300]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+
+    const resetFilter = () => {
+        setPriceRange([0, 300]);
+        setSelectedCategories([]);
+    }
+
+    const toggleCategory = (category: string) => {
+        setSelectedCategories((prev) => 
+            prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category],
+        )
+    }
 
     return (
 
@@ -26,7 +39,13 @@ const Filter = () => {
                 setPriceRange={setPriceRange}
                 />
 
-                <Button variant="ghost" size="sm" className="w-45">
+                <CategoryFilter
+                categories={categories}
+                selectedCategories={selectedCategories}
+                toggleCategory={toggleCategory}
+                />
+
+                <Button variant="ghost" onClick={resetFilter} size="sm" className="w-45">
                     Очистить фильтры
                     <X/>
                 </Button>

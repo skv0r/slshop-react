@@ -4,3 +4,6 @@ export * from "./Card";
 export * from "./pagination"; 
 export * from "./search-bar";
 export * from "./slider"
+export * from "./label"
+export * from "./checkbox"
+export * from "./input"

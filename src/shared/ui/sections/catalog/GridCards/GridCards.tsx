@@ -42,11 +42,22 @@ const cardsData = [
   },
 ];
 
-const GridCards = () => {
+interface GridCardsProps {
+  priceRange: number[];
+}
+
+const GridCards = (
+  {priceRange}: GridCardsProps
+) => {
+
+  const filteredCardsData = cardsData.filter(card =>
+    card.price >= priceRange[0] && card.price <= priceRange[1]
+  )
+
   return (
     <div className="flex flex-col gap-8">
       <div className="max-w-[920px] grid grid-cols-3 gap-[25px]">
-        {cardsData.map((card, index) => (
+        {filteredCardsData.map((card, index) => (
           <Card
             key={index}
             imageUrl={card.imageUrl}

@@ -13,32 +13,32 @@ const cardsData = [
   {
     imageUrl: "dyson-card.svg",
     title: "Dyson Фен",
-    price: "39 990₽",
+    price: 39990,
   },
   {
     imageUrl: "dyson-card.svg",
     title: "iPhone 15 Pro",
-    price: "129 990₽",
+    price: 129990,
   },
   {
     imageUrl: "dyson-card.svg",
     title: "MacBook Pro",
-    price: "199 990₽",
+    price: 199990,
   },
   {
     imageUrl: "dyson-card.svg",
     title: "AirPods Pro",
-    price: "29 990₽",
+    price: 29990,
   },
   {
     imageUrl: "dyson-card.svg",
     title: "AirPods Pro",
-    price: "29 990₽",
+    price: 29900,
   },
   {
     imageUrl: "dyson-card.svg",
     title: "AirPods Pro",
-    price: "29 990₽",
+    price: 29900,
   },
 ];
 
@@ -51,7 +51,7 @@ const GridCards = () => {
             key={index}
             imageUrl={card.imageUrl}
             title={card.title}
-            price={card.price}
+            price={card.price + "₽"}
             variant="compact"
           />
         ))}

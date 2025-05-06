@@ -18,6 +18,7 @@ const PriceRangeFilter = ({
 }: PriceRangeFilterProps) => {
   return (
         <div>
+            <h3>Ценовой диапазон</h3>
             <Slider
             defaultValue={[min, max]}
             max={max}

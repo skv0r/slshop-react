@@ -46,13 +46,14 @@ interface GridCardsProps {
   priceRange: number[];
 }
 
-const GridCards = (
+const GridCards = ( /*Здесь мы уберем данные в отдельный файл*/
   {priceRange}: GridCardsProps
 ) => {
 
   const filteredCardsData = cardsData.filter(card =>
     card.price >= priceRange[0] && card.price <= priceRange[1]
   )
+  /*Здесь мы уберем данные в отдельный файл, когда будем получать данные из бд*/
 
   return (
     <div className="flex flex-col gap-8">

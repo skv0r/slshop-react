@@ -6,7 +6,7 @@ const Catalog = () => {
         <h1 className="text-[48px] font-bold pb-4">Каталог</h1>
         <div className="flex justify-between">
             <Filter />
-            <GridCards />
+            <GridCards priceRange={[0,9999999]}/>
         </div>
     </div>
   );

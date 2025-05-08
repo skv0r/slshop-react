@@ -8,3 +8,4 @@ export * from "./layout/footer";
 // Sections
 export * from "./sections/home";
 export * from "./sections/catalog"; 
+export * from "./sections/about"

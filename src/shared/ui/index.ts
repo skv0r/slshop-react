@@ -9,3 +9,4 @@ export * from "./layout/footer";
 export * from "./sections/home";
 export * from "./sections/catalog"; 
 export * from "./sections/about"
+export * from "./sections/contact"

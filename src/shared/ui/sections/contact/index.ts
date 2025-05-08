@@ -1,0 +1,5 @@
+export {default as Information} from "./Information"
+export {default as ContactInfo} from "./ContactInfo"
+export {default as QuestionForm} from "./ContactForm"
+export {default as Map} from "./Map"
+export {default as FAQ} from "./FAQ"

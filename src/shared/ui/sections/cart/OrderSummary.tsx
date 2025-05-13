@@ -7,7 +7,7 @@ const totalPrice = CartPrice + (typeof(deliveryPrice) !== "number" ? 0 : deliver
 
 const OrderSummary = () => {
     return (
-        <div className="w-96 min-h-64 mb-8 py-8 px-[52px] border-1 border-[#CBD5E1] rounded-md">
+        <div className="w-96 min-h-64 mb-8 py-8 px-[52px] border-1 border-[#CBD5E1] rounded-md bg-white">
             <h3 className="text-xl font-bold mb-8">Сумма покупок</h3>
             <div className="flex justify-between mb-4">
                 <span>Корзина</span>

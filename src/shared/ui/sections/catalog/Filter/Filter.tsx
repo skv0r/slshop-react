@@ -4,7 +4,7 @@ import PriceRangeFilter from "./PriceFilter";
 import { useState } from "react";
 import { CategoryFilter } from "./CatergoryFilter";
 
-const categories = ["Clothing", "Footwear", "Electronics", "Bags"]
+const categories = ["Техника", "Бытовая техника", "Сумки", "Телефоны"]
 
 const Filter = () => {
 

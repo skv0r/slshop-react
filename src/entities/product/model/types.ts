@@ -1,17 +1,10 @@
 export interface Product {
-    id: string
-    title: string
-    description: string
-    price: number
-    category: string
-    image: string
-    rating?: {
-      rate: number
-      count: number
-    }
+    imgUrl: string,
+    title: string,
+    price: number,
   }
   
-  export interface ProductsFilter {
+export interface ProductsFilter {
     page?: number
     limit?: number
     category?: string
@@ -20,7 +13,7 @@ export interface Product {
     sort?: "default" | "price-asc" | "price-desc" | "rating"
   }
   
-  export interface ProductsState {
+export interface ProductsState {
     items: Product[]
     isLoading: boolean
     error: string | null

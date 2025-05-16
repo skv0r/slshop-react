@@ -137,7 +137,7 @@ export const getCategories = (): string[] => {
   
     // Apply category filter
     if (filter.category && filter.category !== "all") {
-      filteredProducts = filteredProducts.filter((product) => product.category === filter.category)
+        filteredProducts = filteredProducts.filter((product) => product.category === filter.category)
     }
   
     // Apply price filter

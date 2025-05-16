@@ -34,16 +34,12 @@ const GridCards = () => {
 
   // Handle category change
   const handleCategoryChange = (categoryId: string) => {
-    if (categoryId === "all") {
-      setCategory("defaultCategory") // или любое другое значение по умолчанию
-    } else {
       setCategory(categoryId)
-    }
   }
 
   // Handle sort change
-  const handleSortChange = (sort: string) => {
-    setSort(sort as any)
+  const handleSortChange = (sort: "default" | "price-asc" | "price-desc" | "rating" | undefined) => {
+    setSort(sort)
   }
 
   // Handle search change

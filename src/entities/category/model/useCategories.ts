@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Category from "./types";
 import fetchCategories from "../api/categoryApi";
 
-const useCategory = () => {
+const useCategories = () => {
     const [catergories, setCategories] = useState<Category[]>([]);
     const [isLooading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -27,4 +27,4 @@ const useCategory = () => {
     return { catergories, isLooading, error}
 }
 
-export default useCategory;
+export default useCategories;

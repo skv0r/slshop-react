@@ -1,13 +1,7 @@
+import useCategories from "@/entities/category/model/useCategories";
+import useProducts from "@/entities/product/model/useProducts";
+import { CatalogPagination } from "@/features/catalog/pagination";
 import { Card } from "@/shared/ui/components";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/shared/ui/components";
 
 const cardsData = [
   {
@@ -54,6 +48,24 @@ const GridCards = ( /*Здесь мы уберем данные в отдель�
     card.price >= priceRange[0] && card.price <= priceRange[1]
   )
   /*Здесь мы уберем данные в отдельный файл, когда будем получать данные из бд*/
+  const { categories, isLoading: categoriesLoading } = useCategories()
+
+  const {
+    items: products,
+    isLoading: productsLoading,
+    totalPages,
+    currentPage,
+    filter,
+    setPage,
+    setPriceRange,
+    setCategory,
+    setSort,
+    setSearch,
+    resetFilters,
+  } = useProducts({
+    limit: 6,
+    page: 1,
+  })
 
   return (
     <div className="flex flex-col gap-8">
@@ -69,30 +81,7 @@ const GridCards = ( /*Здесь мы уберем данные в отдель�
         ))}
       </div>
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#" isActive>
-              1
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">2</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">3</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <CatalogPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage}/>
     </div>
   );
 };

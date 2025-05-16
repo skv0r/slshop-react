@@ -1,3 +1,4 @@
+import { getCategories } from "@/entities/product/api/productApi";
 import Category from "../model/types";
 
 
@@ -9,7 +10,14 @@ const fetchCategories = async () : Promise<Category[]> => {
     const categoryNames = getCategories() //нужно получить из продуктс
 
   // Transform into Category objects
-  const categories: Category[] = []
+  const categories: Category[] = [
+    { id: "all", name: "Все категории", count: 0 },
+    ...categoryNames.map((name) => ({
+      id: name,
+      name: getCategoryDisplayName(name),
+      count: 0, // We'll update this later
+    })),
+  ]
 
   return categories
 }

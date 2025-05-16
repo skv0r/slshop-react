@@ -33,19 +33,20 @@ const Card: React.FC<CardProps> = ({
           />
         </div>
       </a>
-      <div className="p-5">
-        <a href="#">
-          {variant === "compact" ? (
-            <h5 className="flex justify-between mb-2 text-[20px] font-semibold tracking-tight dark:text-white">
-              <span className="text-gray-900">{title}</span>
-              <span className="text-gray-900">{price}</span>
-            </h5>
-          ) : (
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {title}
-            </h5>
-          )}
-        </a>
+      <div className="flex flex-col justify-between p-5">
+          <a href="#">
+            {variant === "compact" ? (
+              <h5 className="flex justify-between mb-2 text-[20px] font-semibold tracking-tight dark:text-white">
+                <span className="text-gray-900 overflow-hidden" style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</span>
+                <span className="text-gray-900">{price}</span>
+              </h5>
+            ) : (
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {title}
+              </h5>
+            )}
+          </a>
+
 
         {variant !== "compact" && (
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">

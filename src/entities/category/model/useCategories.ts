@@ -3,8 +3,8 @@ import Category from "./types";
 import fetchCategories from "../api/categoryApi";
 
 const useCategories = () => {
-    const [catergories, setCategories] = useState<Category[]>([]);
-    const [isLooading, setIsLoading] = useState(false);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect( () => {
@@ -24,7 +24,7 @@ const useCategories = () => {
 
         loadCategories()
     }, [])
-    return { catergories, isLooading, error}
+    return { categories, isLoading, error}
 }
 
 export default useCategories;

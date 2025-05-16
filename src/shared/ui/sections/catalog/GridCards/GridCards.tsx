@@ -1,55 +1,15 @@
-import useCategories from "@/entities/category/model/useCategories";
-import useProducts from "@/entities/product/model/useProducts";
-import { CatalogPagination } from "@/features/catalog/pagination";
-import { Card } from "@/shared/ui/components";
+"use client"
+import { CatalogPagination } from "@/features/catalog/pagination"
+import useCategories from "@/entities/category/model/useCategories"
+import useProducts from "@/entities/product/model/useProducts"
+import ProductGrid from "./ProductGrid"
+import { FilterPanel } from "@/features/catalog/filter/FilterPanel"
 
-const cardsData = [
-  {
-    imageUrl: "dyson-card.svg",
-    title: "Dyson Фен",
-    price: 39990,
-  },
-  {
-    imageUrl: "dyson-card.svg",
-    title: "iPhone 15 Pro",
-    price: 129990,
-  },
-  {
-    imageUrl: "dyson-card.svg",
-    title: "MacBook Pro",
-    price: 199990,
-  },
-  {
-    imageUrl: "dyson-card.svg",
-    title: "AirPods Pro",
-    price: 29990,
-  },
-  {
-    imageUrl: "dyson-card.svg",
-    title: "AirPods Pro",
-    price: 29900,
-  },
-  {
-    imageUrl: "dyson-card.svg",
-    title: "AirPods Pro",
-    price: 29900,
-  },
-];
-
-interface GridCardsProps {
-  priceRange: number[];
-}
-
-const GridCards = ( /*Здесь мы уберем данные в отдельный файл*/
-  {priceRange}: GridCardsProps
-) => {
-
-  const filteredCardsData = cardsData.filter(card =>
-    card.price >= priceRange[0] && card.price <= priceRange[1]
-  )
-  /*Здесь мы уберем данные в отдельный файл, когда будем получать данные из бд*/
+const GridCards = () => {
+  // Get categories
   const { categories, isLoading: categoriesLoading } = useCategories()
 
+  // Initialize products with filters
   const {
     items: products,
     isLoading: productsLoading,
@@ -67,23 +27,50 @@ const GridCards = ( /*Здесь мы уберем данные в отдель�
     page: 1,
   })
 
+  // Handle price range change
+  const handlePriceChange = (values: [number, number]) => {
+    setPriceRange(values)
+  }
+
+  // Handle category change
+  const handleCategoryChange = (categoryId: string) => {
+    if (categoryId === "all") {
+      setCategory("defaultCategory") // или любое другое значение по умолчанию
+    } else {
+      setCategory(categoryId)
+    }
+  }
+
+  // Handle sort change
+  const handleSortChange = (sort: string) => {
+    setSort(sort as any)
+  }
+
+  // Handle search change
+  const handleSearchChange = (search: string) => {
+    setSearch(search)
+  }
+
   return (
-    <div className="flex flex-col gap-8">
-      <div className="max-w-[920px] grid grid-cols-3 gap-[25px]">
-        {filteredCardsData.map((card, index) => (
-          <Card
-            key={index}
-            imageUrl={card.imageUrl}
-            title={card.title}
-            price={card.price + "₽"}
-            variant="compact"
-          />
-        ))}
+    <div className="flex flex-col md:flex-row gap-8">
+      <FilterPanel
+        categories={categories}
+        filter={filter}
+        onPriceChange={handlePriceChange}
+        onCategoryChange={handleCategoryChange}
+        onSortChange={handleSortChange}
+        onSearchChange={handleSearchChange}
+        onReset={resetFilters}
+        isLoading={categoriesLoading}
+      />
+
+      <div className="flex flex-col">
+        <ProductGrid products={products} isLoading={productsLoading} />
+        <CatalogPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
       </div>
-
-      <CatalogPagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage}/>
     </div>
-  );
-};
+  )
+}
 
-export default GridCards;
+
+export default GridCards

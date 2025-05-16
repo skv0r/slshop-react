@@ -8,16 +8,22 @@ import { Input } from "@/shared/ui/components/input";
 
 interface SearchBarProps {
   placeholder?: string;
+  value?: string,
   onSearch?: (query: string) => void;
   className?: string;
 }
 
 export default function SearchBar({
   placeholder = "Искать...",
+  value = "",
   onSearch,
   className,
 }: SearchBarProps) {
   const [query, setQuery] = React.useState("");
+
+  React.useEffect(() => {
+    setQuery(value)
+  }, [value])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

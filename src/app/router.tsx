@@ -6,12 +6,14 @@ import NotFound from "@/pages/NotFound";
 import AboutUs from "@/pages/About";
 import Contacts from "@/pages/Contacts";
 import Cart from "@/pages/Cart";
+import ProductDetail from "@/pages/ProductDetails";
 export enum Routes {
   Home = "/",
   Catalog = "/catalog",
   About = "/about",
   Contacts = "/contact",
   Cart = "/cart",
+  Product = "/product/:id",
   NotFound = "*",
 }
 
@@ -25,6 +27,7 @@ const router = createBrowserRouter([
       { path: Routes.About, element: <AboutUs/>},
       { path: Routes.Contacts, element: <Contacts/>},
       { path: Routes.Cart, element: <Cart/>},
+      { path: Routes.Product, element: <ProductDetail/>},
       { path: Routes.NotFound, element: <NotFound /> },
     ],
   },

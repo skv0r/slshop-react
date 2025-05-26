@@ -1,5 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { Button } from "../button";
+import { Link } from "react-router-dom"
 
 interface CardProps {
   imageUrl: string;
@@ -8,6 +9,7 @@ interface CardProps {
   description?: string;
   buttonText?: string;
   variant?: "default" | "compact";
+  productId?: string;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -17,6 +19,7 @@ const Card: React.FC<CardProps> = ({
   description = "Описание карточки - многострочное",
   buttonText = "Перейти к товару",
   variant = "default",
+  productId,
 }) => {
   return (
     <div
@@ -55,14 +58,18 @@ const Card: React.FC<CardProps> = ({
         )}
 
         <div className="flex items-center justify-between">
-          <Button
-            className={`${
-              variant === "compact" ? "w-full" : "max-w-50"
-            } text-[14px] font-medium`}
-            variant="default"
-          >
-            {buttonText} <ChevronRight />
-          </Button>
+          <Link to={`/product/${productId}`} className={`${
+                variant === "compact" ? "w-full" : "max-w-50"
+              }`} >
+            <Button
+              className={`${
+                variant === "compact" ? "w-full" : "max-w-50"
+              } text-[14px] font-medium`}
+              variant="default"
+            >
+              {buttonText} <ChevronRight />
+            </Button>
+          </Link>
           {variant !== "compact" && (
             <div className="flex items-center justify-between rounded-[6px] border-[CBD5E1] w-[109px] h-[40px] border-1 p-1">
               <button className="size-8 bg-white">-</button>

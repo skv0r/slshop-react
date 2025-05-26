@@ -47,6 +47,7 @@ const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
           title={product.title}
           price={`${product.price.toLocaleString()} ₽`}
           variant="compact"
+          productId={product.id}
         />
       ))}
     </div>

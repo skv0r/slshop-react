@@ -11,3 +11,4 @@ export * from "./sections/catalog";
 export * from "./sections/about";
 export * from "./sections/contact";
 export * from "./sections/cart";
+export * from "./sections/product"

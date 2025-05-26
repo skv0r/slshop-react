@@ -1,33 +1,39 @@
-// src/shared/ui/sections/product/ProductContent.tsx
 import { Link } from "react-router-dom"
 import { Button } from "@/shared/ui/components"
 import { ArrowLeft, Star, Plus, Minus, Heart, Share2 } from "lucide-react"
-import type { Product } from "@/entities/product/model/types" 
-import { createQuantityHandler} from "@/shared/utils"
+import type { Product } from "@/entities/product/model/types"
+import { createQuantityHandler } from "@/shared/utils"
+import useCart from "@/entities/cart/model/useCart"
 
 interface ProductContentProps {
-    product: Product;
-    quantity: number;
-    setQuantity: (value: number | ((prev: number) => number)) => void;
-    selectedImage: number;
-    setSelectedImage: (index: number) => void;
+  product: Product
+  quantity: number
+  setQuantity: (value: number | ((prev: number) => number)) => void;
+  selectedImage: number
+  setSelectedImage: (index: number) => void
 }
 
-
 const ProductContent = ({ 
-    product, 
+    product,
     quantity,
-    setQuantity, 
-    selectedImage, 
-    setSelectedImage, 
+    setQuantity,
+    selectedImage,
+    setSelectedImage 
 }: ProductContentProps) => {
-    const images = [product.image, product.image, product.image]
-    const handleQuantityChange = createQuantityHandler(setQuantity);
 
-    return (
-        
-        <>
-        <div className="mb-8">
+  const images = [product.image, product.image, product.image]
+  const { addToCart, isInCart, getItemQuantity } = useCart()
+  const handleQuantityChange = createQuantityHandler(setQuantity)
+  const isProductInCart = isInCart(product.id)
+  const cartQuantity = getItemQuantity(product.id)
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity)
+  }
+
+  return (
+    <>
+      <div className="mb-8">
         <Link to="/catalog" className="inline-flex items-center text-[#6366F1] hover:underline">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Вернуться в каталог
@@ -94,9 +100,19 @@ const ProductContent = ({
             <div className="text-[32px] font-bold text-[#6366F1] mb-6">{product.price.toLocaleString()} ₽</div>
           </div>
 
+          {/* Cart Status */}
+          {isProductInCart && (
+            <div className="bg-green-50 border border-green-200 rounded-md p-4">
+              <p className="text-green-800 font-medium">✓ Товар уже в корзине ({cartQuantity} шт.)</p>
+              <Link to="/cart" className="text-green-600 hover:text-green-700 underline text-sm">
+                Перейти в корзину
+              </Link>
+            </div>
+          )}
+
           {/* Quantity and Add to Cart */}
           <div className="space-y-4">
-          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
               <span className="text-lg font-medium">Количество:</span>
               <div className="flex items-center border-1 border-[#CBD5E1] rounded-md">
                 <button
@@ -115,7 +131,9 @@ const ProductContent = ({
 
             {/* Action Buttons */}
             <div className="flex gap-4">
-              <Button className="flex-1 text-lg py-3">Добавить в корзину</Button>
+              <Button className="flex-1 text-lg py-3" onClick={handleAddToCart}>
+                {isProductInCart ? "Добавить ещё" : "Добавить в корзину"}
+              </Button>
               <Button variant="outline" size="lg">
                 <Heart className="h-5 w-5" />
               </Button>
@@ -146,8 +164,8 @@ const ProductContent = ({
           </div>
         </div>
       </div>
-        </>
-    )
+    </>
+  )
 }
 
-export default ProductContent;
+export default ProductContent

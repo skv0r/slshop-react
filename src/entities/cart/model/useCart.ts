@@ -4,38 +4,53 @@ import type { Product } from "@/entities/product"
 
 const CART_STORAGE_KEY = "sl-shop-cart"
 
+// Глобальное состояние корзины
+let globalCart: Cart = {
+  items: [],
+  totalItems: 0,
+  totalPrice: 0,
+}
+
+// Список слушателей для обновления компонентов
+const listeners: Set<() => void> = new Set()
+
+// Загрузка из localStorage при первом импорте
+try {
+  const savedCart = localStorage.getItem(CART_STORAGE_KEY)
+  if (savedCart) {
+    globalCart = JSON.parse(savedCart)
+  }
+} catch (err) {
+  console.error("Error loading cart from localStorage:", err)
+}
+
+// Функция для уведомления всех компонентов об изменениях
+const notifyListeners = () => {
+  listeners.forEach(listener => listener())
+}
+
+// Функция для сохранения в localStorage
+const saveToStorage = (cart: Cart) => {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart))
+  } catch (err) {
+    console.error("Error saving cart to localStorage:", err)
+  }
+}
+
 const useCart = () => {
-  const [cart, setCart] = useState<Cart>({
-    items: [],
-    totalItems: 0,
-    totalPrice: 0,
-  })
+  const [cart, setCart] = useState<Cart>(globalCart)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Load cart from localStorage on mount
+  // Подписка на изменения глобального состояния
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem(CART_STORAGE_KEY)
-      if (savedCart) {
-        const parsedCart = JSON.parse(savedCart)
-        setCart(parsedCart)
-      }
-    } catch (err) {
-      console.error("Error loading cart from localStorage:", err)
-      setError("Ошибка загрузки корзины")
+    const updateCart = () => setCart(globalCart)
+    listeners.add(updateCart)
+    return () => {
+      listeners.delete(updateCart)
     }
   }, [])
-
-  // Save cart to localStorage whenever cart changes
-  useEffect(() => {
-    try {
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart))
-    } catch (err) {
-      console.error("Error saving cart to localStorage:", err)
-      setError("Ошибка сохранения корзины")
-    }
-  }, [cart])
 
   // Calculate totals
   const calculateTotals = useCallback((items: CartItem[]) => {
@@ -51,34 +66,35 @@ const useCart = () => {
       setError(null)
 
       try {
-        setCart((prevCart) => {
-          const existingItemIndex = prevCart.items.findIndex((item) => item.productId === product.id)
+        const existingItemIndex = globalCart.items.findIndex((item) => item.productId === product.id)
 
-          let newItems: CartItem[]
+        let newItems: CartItem[]
 
-          if (existingItemIndex >= 0) {
-            // Update existing item
-            newItems = prevCart.items.map((item, index) =>
-              index === existingItemIndex ? { ...item, quantity: item.quantity + quantity } : item,
-            )
-          } else {
-            // Add new item
-            const newItem: CartItem = {
-              productId: product.id,
-              quantity,
-              product,
-            }
-            newItems = [...prevCart.items, newItem]
+        if (existingItemIndex >= 0) {
+          // Update existing item
+          newItems = globalCart.items.map((item, index) =>
+            index === existingItemIndex ? { ...item, quantity: item.quantity + quantity } : item,
+          )
+        } else {
+          // Add new item
+          const newItem: CartItem = {
+            productId: product.id,
+            quantity,
+            product,
           }
+          newItems = [...globalCart.items, newItem]
+        }
 
-          const { totalItems, totalPrice } = calculateTotals(newItems)
+        const { totalItems, totalPrice } = calculateTotals(newItems)
 
-          return {
-            items: newItems,
-            totalItems,
-            totalPrice,
-          }
-        })
+        globalCart = {
+          items: newItems,
+          totalItems,
+          totalPrice,
+        }
+
+        saveToStorage(globalCart)
+        notifyListeners()
       } catch (err) {
         setError("Ошибка добавления товара в корзину")
         console.error("Error adding to cart:", err)
@@ -97,17 +113,17 @@ const useCart = () => {
         return
       }
 
-      setCart((prevCart) => {
-        const newItems = prevCart.items.map((item) => (item.productId === productId ? { ...item, quantity } : item))
+      const newItems = globalCart.items.map((item) => (item.productId === productId ? { ...item, quantity } : item))
+      const { totalItems, totalPrice } = calculateTotals(newItems)
 
-        const { totalItems, totalPrice } = calculateTotals(newItems)
+      globalCart = {
+        items: newItems,
+        totalItems,
+        totalPrice,
+      }
 
-        return {
-          items: newItems,
-          totalItems,
-          totalPrice,
-        }
-      })
+      saveToStorage(globalCart)
+      notifyListeners()
     },
     [calculateTotals],
   )
@@ -115,44 +131,48 @@ const useCart = () => {
   // Remove item from cart
   const removeFromCart = useCallback(
     (productId: string) => {
-      setCart((prevCart) => {
-        const newItems = prevCart.items.filter((item) => item.productId !== productId)
-        const { totalItems, totalPrice } = calculateTotals(newItems)
+      const newItems = globalCart.items.filter((item) => item.productId !== productId)
+      const { totalItems, totalPrice } = calculateTotals(newItems)
 
-        return {
-          items: newItems,
-          totalItems,
-          totalPrice,
-        }
-      })
+      globalCart = {
+        items: newItems,
+        totalItems,
+        totalPrice,
+      }
+
+      saveToStorage(globalCart)
+      notifyListeners()
     },
     [calculateTotals],
   )
 
   // Clear entire cart
   const clearCart = useCallback(() => {
-    setCart({
+    globalCart = {
       items: [],
       totalItems: 0,
       totalPrice: 0,
-    })
+    }
+
+    saveToStorage(globalCart)
+    notifyListeners()
   }, [])
 
   // Get item quantity by product ID
   const getItemQuantity = useCallback(
     (productId: string) => {
-      const item = cart.items.find((item) => item.productId === productId)
+      const item = globalCart.items.find((item) => item.productId === productId)
       return item?.quantity || 0
     },
-    [cart.items],
+    [],
   )
 
   // Check if item is in cart
   const isInCart = useCallback(
     (productId: string) => {
-      return cart.items.some((item) => item.productId === productId)
+      return globalCart.items.some((item) => item.productId === productId)
     },
-    [cart.items],
+    [],
   )
 
   return {

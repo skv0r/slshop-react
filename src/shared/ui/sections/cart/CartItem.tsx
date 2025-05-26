@@ -3,6 +3,7 @@ import { Button } from "@/shared/ui/components"
 import { Trash2, Plus, Minus } from "lucide-react"
 import type { CartItem as CartItemType } from "@/entities/cart"
 import { canDecrement } from "@/shared/utils"
+import useCategories from "@/entities/category/model/useCategories"
 
 interface CartItemProps {
   item: CartItemType
@@ -11,6 +12,9 @@ interface CartItemProps {
 }
 
 const CartItem = ({ item, onUpdateQuantity, onRemove }: CartItemProps) => {
+  
+  const { categories } = useCategories();
+  const category = categories.find(cat => cat.id === item.product.category)?.name || item.product.category;
 
   const handleQuantityChange = (delta: number) => {
     const newQuantity = item.quantity + delta
@@ -41,7 +45,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }: CartItemProps) => {
         <p className="text-sm text-gray-600 mt-1 line-clamp-2">{item.product.description}</p>
         <div className="flex items-center gap-2 mt-2">
           <span className="text-sm text-gray-500">Категория:</span>
-          <span className="text-sm font-medium capitalize">{item.product.category}</span>
+          <span className="text-sm font-medium capitalize">{category}</span> {/* Используем переведенное название категории */}
         </div>
       </div>
 

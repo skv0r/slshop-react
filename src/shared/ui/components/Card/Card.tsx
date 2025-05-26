@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Heart } from "lucide-react";
 import { Button } from "../button";
 import { Link } from "react-router-dom"
 
@@ -21,6 +21,9 @@ const Card: React.FC<CardProps> = ({
   variant = "default",
   productId,
 }) => {
+
+
+  
   return (
     <div
       className={`${
@@ -71,10 +74,10 @@ const Card: React.FC<CardProps> = ({
             </Button>
           </Link>
           {variant !== "compact" && (
-            <div className="flex items-center justify-between rounded-[6px] border-[CBD5E1] w-[109px] h-[40px] border-1 p-1">
-              <button className="size-8 bg-white">-</button>
-              <span className="rounded-md bg-[#F1F5F9] px-3 py-1.5">0</span>
-              <button className="size-8 bg-white">+</button>
+            <div className="rounded-[8px] border-[CBD5E1] border-1">
+              <Button className="h-[40px]" variant="outline" size="lg">
+                <Heart className="h-5 w-5" />
+              </Button>
             </div>
           )}
         </div>

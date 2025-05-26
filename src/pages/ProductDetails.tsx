@@ -40,10 +40,6 @@ const ProductDetail = () => {
     fetchProduct()
   }, [id])
 
-  const handleQuantityChange = (delta: number) => {
-    setQuantity((prev) => Math.max(1, prev + delta))
-  }
-
   if (isLoading) {
     return (
       <div className="py-8 px-[52px]">
@@ -75,7 +71,6 @@ const ProductDetail = () => {
         setQuantity={setQuantity} 
         selectedImage={selectedImage} 
         setSelectedImage={setSelectedImage} 
-        handleQuantityChange={handleQuantityChange}
         />
         <FeaturesProduct/>
     </div>

@@ -2,15 +2,15 @@
 import { Link } from "react-router-dom"
 import { Button } from "@/shared/ui/components"
 import { ArrowLeft, Star, Plus, Minus, Heart, Share2 } from "lucide-react"
-import type { Product } from "@/entities/product/model/types" // Импортируйте тип Product
+import type { Product } from "@/entities/product/model/types" 
+import { createQuantityHandler} from "@/shared/utils"
 
 interface ProductContentProps {
     product: Product;
     quantity: number;
-    setQuantity: (quantity: number) => void;
+    setQuantity: (value: number | ((prev: number) => number)) => void;
     selectedImage: number;
     setSelectedImage: (index: number) => void;
-    handleQuantityChange: (delta: number) => void;
 }
 
 
@@ -20,10 +20,10 @@ const ProductContent = ({
     setQuantity, 
     selectedImage, 
     setSelectedImage, 
-    handleQuantityChange 
 }: ProductContentProps) => {
     const images = [product.image, product.image, product.image]
-    console.log(setQuantity)
+    const handleQuantityChange = createQuantityHandler(setQuantity);
+
     return (
         
         <>
@@ -96,7 +96,7 @@ const ProductContent = ({
 
           {/* Quantity and Add to Cart */}
           <div className="space-y-4">
-            <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4">
               <span className="text-lg font-medium">Количество:</span>
               <div className="flex items-center border-1 border-[#CBD5E1] rounded-md">
                 <button

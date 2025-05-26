@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const Cart = () => {
     return (
-        <div className="py-8 px-[52px] border-1 border-[#CBD5E1] rounded-md" >
+        <div className="py-8 px-[52px] min-h-[62vh]" >
         <h1 className="text-[48px] font-bold pb-4">Корзина</h1>
         <div className="flex justify-between">
             <ProductList/>

@@ -7,7 +7,7 @@ const ProductList = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full min-h-64 mb-8 py-8 px-[52px] border-1 border-[#CBD5E1] rounded-md">
+      <div className="w-4xl min-h-64 mb-8 py-8 px-[52px] border-1 border-[#CBD5E1] rounded-md">
         <div className="animate-pulse space-y-4">
           {Array.from({ length: 3 }).map((_, index) => (
             <div key={index} className="flex items-center gap-4 p-4 bg-gray-100 rounded-md">
@@ -36,7 +36,7 @@ const ProductList = () => {
   }
 
   return (
-    <div className="w-full mb-8 py-8 px-[52px] border-1 border-[#CBD5E1] rounded-md">
+    <div className="w-4xl mb-8 py-8 px-[52px] border-1 border-[#CBD5E1] rounded-md">
       <h3 className="text-xl font-bold mb-6">Товары в корзине ({cart.totalItems})</h3>
       <div className="space-y-4">
         {cart.items.map((item) => (

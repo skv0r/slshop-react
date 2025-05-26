@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { Button } from "@/shared/ui/components"
 import { Trash2, Plus, Minus } from "lucide-react"
 import type { CartItem as CartItemType } from "@/entities/cart"
-import { createQuantityHandler, canDecrement } from "@/shared/utils"
+import { canDecrement } from "@/shared/utils"
 
 interface CartItemProps {
   item: CartItemType
@@ -11,14 +11,20 @@ interface CartItemProps {
 }
 
 const CartItem = ({ item, onUpdateQuantity, onRemove }: CartItemProps) => {
-  const handleQuantityChange = createQuantityHandler((quantity) => onUpdateQuantity(item.productId, quantity), 1)
+
+  const handleQuantityChange = (delta: number) => {
+    const newQuantity = item.quantity + delta
+    if (newQuantity >= 1) {
+      onUpdateQuantity(item.productId, newQuantity)
+    }
+  }
 
   return (
     <div className="flex items-center gap-4 p-4 bg-white border border-[#CBD5E1] rounded-md">
       {/* Product Image */}
       <Link to={`/product/${item.productId}`} className="flex-shrink-0">
         <img
-          src={item.product.image || "/placeholder.svg"}
+          src={"/placeholder.svg"}
           alt={item.product.title}
           className="w-20 h-20 object-contain bg-gray-50 rounded-md border border-[#CBD5E1]"
         />

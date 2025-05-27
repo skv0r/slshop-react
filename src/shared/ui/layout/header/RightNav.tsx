@@ -7,7 +7,7 @@ import {
 import { cn } from "@/shared/lib/utils";
 
 const navItems = [
-  { href: "/profile", label: "Профиль" },
+  { href: "/history", label: "История" },
   { href: "/featured", label: "Избранное" },
   { href: "/cart", label: "Корзина" },
 ];

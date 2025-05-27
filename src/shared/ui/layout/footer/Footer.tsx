@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
               Физический адрес
             </h3>
             <p className="text-[#64748B] text-[14px] text-left">
-              г.Москва, п-кт Ленина д. 15
+              г. Москва, п-кт Ленина д. 15
             </p>
           </div>
 
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
               Документы
             </h3>
             <a
-              href="/docs/offer-2025.pdf"
+              href="/offer-2025.pdf"
               className="text-blue-600 hover:text-blue-700 transition-colors text-[14px] block text-left"
               target="_blank"
               rel="noopener noreferrer"

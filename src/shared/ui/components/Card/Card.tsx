@@ -1,5 +1,6 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Heart } from "lucide-react";
 import { Button } from "../button";
+import { Link } from "react-router-dom"
 
 interface CardProps {
   imageUrl: string;
@@ -8,6 +9,7 @@ interface CardProps {
   description?: string;
   buttonText?: string;
   variant?: "default" | "compact";
+  productId?: string;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -17,7 +19,11 @@ const Card: React.FC<CardProps> = ({
   description = "Описание карточки - многострочное",
   buttonText = "Перейти к товару",
   variant = "default",
+  productId,
 }) => {
+
+
+  
   return (
     <div
       className={`${
@@ -33,19 +39,20 @@ const Card: React.FC<CardProps> = ({
           />
         </div>
       </a>
-      <div className="p-5">
-        <a href="#">
-          {variant === "compact" ? (
-            <h5 className="flex justify-between mb-2 text-[20px] font-semibold tracking-tight dark:text-white">
-              <span className="text-gray-900">{title}</span>
-              <span className="text-gray-900">{price}</span>
-            </h5>
-          ) : (
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {title}
-            </h5>
-          )}
-        </a>
+      <div className="flex flex-col justify-between p-5">
+          <a href="#">
+            {variant === "compact" ? (
+              <h5 className="flex justify-between mb-2 text-[20px] font-semibold tracking-tight dark:text-white">
+                <span className="text-gray-900 overflow-hidden" style={{ maxWidth: '150px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</span>
+                <span className="text-gray-900">{price}</span>
+              </h5>
+            ) : (
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {title}
+              </h5>
+            )}
+          </a>
+
 
         {variant !== "compact" && (
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -54,19 +61,23 @@ const Card: React.FC<CardProps> = ({
         )}
 
         <div className="flex items-center justify-between">
-          <Button
-            className={`${
-              variant === "compact" ? "w-full" : "max-w-50"
-            } text-[14px] font-medium`}
-            variant="default"
-          >
-            {buttonText} <ChevronRight />
-          </Button>
+          <Link to={`/product/${productId}`} className={`${
+                variant === "compact" ? "w-full" : "max-w-50"
+              }`} >
+            <Button
+              className={`${
+                variant === "compact" ? "w-full" : "max-w-50"
+              } text-[14px] font-medium`}
+              variant="default"
+            >
+              {buttonText} <ChevronRight />
+            </Button>
+          </Link>
           {variant !== "compact" && (
-            <div className="flex items-center justify-between rounded-[6px] border-[CBD5E1] w-[109px] h-[40px] border-1 p-1">
-              <button className="size-8 bg-white">-</button>
-              <span className="rounded-md bg-[#F1F5F9] px-3 py-1.5">0</span>
-              <button className="size-8 bg-white">+</button>
+            <div className="rounded-[8px] border-[CBD5E1] border-1">
+              <Button className="h-[40px]" variant="outline" size="lg">
+                <Heart className="h-5 w-5" />
+              </Button>
             </div>
           )}
         </div>

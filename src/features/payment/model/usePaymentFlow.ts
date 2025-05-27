@@ -101,6 +101,7 @@ export const usePaymentFlow = () => {
     selectedMethod,
     navigate,
     clearCart,
+    cart.totalItems,
   ])
 
   const goBackToCart = useCallback(() => {

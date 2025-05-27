@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import useCart from "@/entities/cart/model/useCart"
 import usePayment from "@/entities/payment/model/usePayment"
 import type { PaymentMethod, PaymentData } from "@/entities/payment"
+import { createOrder } from "@/shared/api/orders"
 
 interface CustomerInfo {
   name: string
@@ -45,11 +46,19 @@ export const usePaymentFlow = () => {
     }
 
     return null
-  }, [customerInfo, cart.totalItems])
+  }, [customerInfo, cart])
+
+  const deliveryPrice = cart.totalPrice >= 30000 ? 0 : 100
+  const totalPrice = cart.totalPrice + deliveryPrice
 
   const handlePayment = useCallback(async () => {
+    console.log("🚀 Начинаем процесс оплаты")
+    console.log("Данные корзины:", cart)
+    console.log("Данные клиента:", customerInfo)
+
     const validationError = validateForm()
     if (validationError) {
+      console.log("❌ Ошибка валидации:", validationError)
       alert(validationError)
       if (cart.totalItems === 0) {
         navigate("/cart")
@@ -58,6 +67,7 @@ export const usePaymentFlow = () => {
     }
 
     const orderId = generateOrderId()
+    console.log("📝 Сгенерирован ID заказа:", orderId)
 
     const paymentData: PaymentData = {
       amount: cart.totalPrice,
@@ -66,24 +76,57 @@ export const usePaymentFlow = () => {
       customerInfo,
     }
 
+    console.log("💳 Обрабатываем платеж с данными:", paymentData)
     const result = await processPayment(selectedMethod, paymentData)
+    console.log("💳 Результат платежа:", result)
 
     if (result.success) {
-      // Сначала переходим на страницу успеха, ПОТОМ очищаем корзину
+      console.log("✅ Платеж успешен, сохраняем заказ в БД")
+
+      // Сохраняем заказ в базу данных
+      try {
+        const orderData = {
+          orderNumber: orderId,
+          customerName: customerInfo.name,
+          customerEmail: customerInfo.email,
+          customerPhone: customerInfo.phone,
+          totalAmount: totalPrice,
+          paymentMethod: selectedMethod,
+          transactionId: result.transactionId,
+          items: cart.items,
+        }
+
+        console.log("📦 Данные для сохранения заказа:", orderData)
+
+        const orderResult = await createOrder(orderData)
+        console.log("📦 Результат сохранения заказа:", orderResult)
+
+        if (!orderResult.success) {
+          console.error("❌ Ошибка сохранения заказа:", orderResult.error)
+          alert("Заказ обработан, но возникла ошибка при сохранении. Обратитесь в поддержку.")
+        } else {
+          console.log("✅ Заказ успешно сохранен с ID:", orderResult.orderId)
+        }
+      } catch (error) {
+        console.error("💥 Критическая ошибка при сохранении заказа:", error)
+      }
+
+      console.log("🎉 Переходим на страницу успеха")
       navigate("/payment/success", {
         state: {
           orderId: result.orderId,
           transactionId: result.transactionId,
-          amount: cart.totalPrice,
+          amount: totalPrice,
         },
         replace: true,
       })
 
-      // Очищаем корзину с небольшой задержкой
       setTimeout(() => {
+        console.log("🧹 Очищаем корзину")
         clearCart()
       }, 100)
     } else {
+      console.log("❌ Платеж неуспешен, переходим на страницу ошибки")
       navigate("/payment/failure", {
         state: {
           orderId: result.orderId,
@@ -101,18 +144,15 @@ export const usePaymentFlow = () => {
     selectedMethod,
     navigate,
     clearCart,
-    cart.totalItems,
+    cart,
+    totalPrice,
   ])
 
   const goBackToCart = useCallback(() => {
     navigate("/cart")
   }, [navigate])
 
-  const deliveryPrice = cart.totalPrice >= 30000 ? 0 : 100
-  const totalPrice = cart.totalPrice + deliveryPrice
-
   return {
-    // State
     selectedMethod,
     customerInfo,
     availableMethods,
@@ -120,14 +160,10 @@ export const usePaymentFlow = () => {
     cart,
     deliveryPrice,
     totalPrice,
-
-    // Actions
     setSelectedMethod,
     handleInputChange,
     handlePayment,
     goBackToCart,
-
-    // Computed
     isCartEmpty: cart.totalItems === 0,
   }
 }

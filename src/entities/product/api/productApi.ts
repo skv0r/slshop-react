@@ -1,205 +1,169 @@
-import { ProductsFilter } from './../model/types';
-import { Product } from "../model/types";
+import { supabase } from "@/shared/lib/supabase"
+import type { ProductsFilter, Product } from "../model/types"
 
+// Получение всех доступных категорий из продуктов
+export const getCategories = async (): Promise<string[]> => {
+  try {
+    const { data, error } = await supabase.from("categories").select("name")
 
-const mockProducts: Product[] = [
-    {
-      id: "1",
-      title: "Dyson Фен Supersonic HD07",
-      description: "Профессиональный фен с технологией контроля температуры для защиты волос от повреждений",
-      price: 39990,
-      category: "beauty",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.8, count: 120 },
-    },
-    {
-      id: "2",
-      title: "iPhone 15 Pro",
-      description: "Смартфон с процессором A17 Pro, титановым корпусом и улучшенной камерой",
-      price: 129990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.9, count: 350 },
-    },
-    {
-      id: "3",
-      title: "MacBook Pro 16",
-      description: "Мощный ноутбук с процессором M3 Pro для профессиональной работы",
-      price: 199990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.7, count: 230 },
-    },
-    {
-      id: "4",
-      title: "AirPods Pro 2",
-      description: "Беспроводные наушники с активным шумоподавлением и адаптивным звуком",
-      price: 29990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.6, count: 180 },
-    },
-    {
-      id: "5",
-      title: "Samsung Galaxy S24 Ultra",
-      description: "Флагманский смартфон с продвинутой камерой и функциями искусственного интеллекта",
-      price: 119990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.7, count: 210 },
-    },
-    {
-      id: "6",
-      title: "Dyson V15 Detect",
-      description: "Беспроводной пылесос с лазерным обнаружением пыли и умной автоматической настройкой мощности",
-      price: 59990,
-      category: "home",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.8, count: 150 },
-    },
-    {
-      id: "7",
-      title: "iPad Pro 12.9",
-      description: "Планшет с дисплеем Liquid Retina XDR и процессором M2 для профессиональных задач",
-      price: 149990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.8, count: 190 },
-    },
-    {
-      id: "8",
-      title: "Sony WH-1000XM5",
-      description: "Беспроводные наушники с лучшим в индустрии шумоподавлением и высоким качеством звука",
-      price: 34990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.9, count: 220 },
-    },
-    {
-      id: "9",
-      title: "Xiaomi Robot Vacuum S10+",
-      description: "Робот-пылесос с функцией влажной уборки и автоматической очисткой контейнера",
-      price: 29990,
-      category: "home",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.5, count: 130 },
-    },
-    {
-      id: "10",
-      title: "Canon EOS R5",
-      description: "Профессиональная беззеркальная камера с 8K-видео и стабилизацией изображения",
-      price: 349990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.8, count: 95 },
-    },
-    {
-      id: "11",
-      title: "Samsung QLED 4K TV",
-      description: "Телевизор с квантовыми точками, ярким изображением и умными функциями",
-      price: 89990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.7, count: 180 },
-    },
-    {
-      id: "12",
-      title: "Bose SoundLink Revolve+",
-      description: "Портативная Bluetooth-колонка с объемным звуком 360° и водонепроницаемым корпусом",
-      price: 24990,
-      category: "electronics",
-      image: "/dyson-card.svg",
-      rating: { rate: 4.6, count: 140 },
-    },
-]
+    if (error) {
+      throw new Error(`Ошибка загрузки категорий: ${error.message}`)
+    }
 
-// Get all available categories from products
-export const getCategories = (): string[] => {
-    const categories = new Set<string>()
-    mockProducts.forEach((product) => {
-      categories.add(product.category)
-    })
-    return Array.from(categories)
+    return (data || []).map((category) => category.name)
+  } catch (error) {
+    console.error("Ошибка при загрузке категорий:", error)
+    return []
   }
-  
-  // Get products with filtering and pagination
-  export const getProducts = async (
-    filter: ProductsFilter = {},
-  ): Promise<{
-    items: Product[]
-    totalItems: number
-    totalPages: number
-  }> => {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 300))
-  
-    let filteredProducts = [...mockProducts]
-  
-    // Apply category filter
-    if (filter.category && filter.category !== "all") {
-        filteredProducts = filteredProducts.filter((product) => product.category === filter.category)
-    }
-  
-    // Apply price filter
-    if (filter.priceMin !== undefined) {
-      filteredProducts = filteredProducts.filter((product) => product.price >= filter.priceMin!)
-    }
-  
-    if (filter.priceMax !== undefined) {
-      filteredProducts = filteredProducts.filter((product) => product.price <= filter.priceMax!)
-    }
-  
-    // Apply search filter if provided
-    if (filter.search) {
-      const searchLower = filter.search.toLowerCase()
-      filteredProducts = filteredProducts.filter(
-        (product) =>
-          product.title.toLowerCase().includes(searchLower) || product.description.toLowerCase().includes(searchLower),
+}
+
+// Получение товаров с фильтрацией и пагинацией
+export const getProducts = async (
+  filter: ProductsFilter = {},
+): Promise<{
+  items: Product[]
+  totalItems: number
+  totalPages: number
+}> => {
+  try {
+    // Базовый запрос
+    let query = supabase
+      .from("products")
+      .select(
+        `
+        *,
+        categories!inner(name, display_name)
+      `,
+        { count: "exact" },
       )
+      .eq("in_stock", true)
+
+    // Применяем фильтр по категории
+    if (filter.category && filter.category !== "all") {
+      query = query.eq("categories.name", filter.category)
     }
-  
-    // Apply sorting
+
+    // Применяем фильтр по цене
+    if (filter.priceMin !== undefined) {
+      query = query.gte("price", filter.priceMin)
+    }
+
+    if (filter.priceMax !== undefined) {
+      query = query.lte("price", filter.priceMax)
+    }
+
+    // Применяем поиск
+    if (filter.search) {
+      query = query.or(`title.ilike.%${filter.search}%,description.ilike.%${filter.search}%`)
+    }
+
+    // Применяем сортировку
     if (filter.sort) {
       switch (filter.sort) {
         case "price-asc":
-          filteredProducts.sort((a, b) => a.price - b.price)
+          query = query.order("price", { ascending: true })
           break
         case "price-desc":
-          filteredProducts.sort((a, b) => b.price - a.price)
+          query = query.order("price", { ascending: false })
           break
         case "rating":
-          filteredProducts.sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0))
+          query = query.order("rating_rate", { ascending: false })
           break
         default:
-          // Default sorting (by id)
+          query = query.order("created_at", { ascending: false })
           break
       }
+    } else {
+      query = query.order("created_at", { ascending: false })
     }
-  
-    // Calculate pagination
+
+    // Применяем пагинацию
     const page = filter.page || 1
     const limit = filter.limit || 6
-    const totalItems = filteredProducts.length
-    const totalPages = Math.ceil(totalItems / limit)
-  
-    // Apply pagination
     const startIndex = (page - 1) * limit
-    const endIndex = startIndex + limit
-    const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
-  
+    const endIndex = startIndex + limit - 1
+
+    query = query.range(startIndex, endIndex)
+
+    const { data, error, count } = await query
+
+    if (error) {
+      throw new Error(`Ошибка загрузки товаров: ${error.message}`)
+    }
+
+    // Преобразуем данные из Supabase в формат Product
+    const products: Product[] = (data || []).map((item: any) => ({
+      id: item.id,
+      title: item.title,
+      description: item.description || "",
+      price: Number(item.price),
+      category: item.categories?.name || "unknown",
+      image: item.image_url || "/placeholder.svg",
+      rating: item.rating_rate
+        ? {
+            rate: Number(item.rating_rate),
+            count: item.rating_count || 0,
+          }
+        : undefined,
+    }))
+
+    const totalItems = count || 0
+    const totalPages = Math.ceil(totalItems / limit)
+
     return {
-      items: paginatedProducts,
+      items: products,
       totalItems,
       totalPages,
     }
+  } catch (error) {
+    console.error("Ошибка при загрузке товаров:", error)
+    throw error
   }
-  
-  // Get a single product by ID
-  export const getProductById = async (id: string): Promise<Product | null> => {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 300))
-  
-    const product = mockProducts.find((p) => p.id === id)
-    return product || null
+}
+
+// Получение одного товара по ID
+export const getProductById = async (id: string): Promise<Product | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .select(`
+        *,
+        categories(name, display_name)
+      `)
+      .eq("id", id)
+      .eq("in_stock", true)
+      .single()
+
+    if (error) {
+      if (error.code === "PGRST116") {
+        return null // Товар не найден
+      }
+      throw new Error(`Ошибка загрузки товара: ${error.message}`)
+    }
+
+    if (!data) {
+      return null
+    }
+
+    // Преобразуем данные из Supabase в формат Product
+    const product: Product = {
+      id: data.id,
+      title: data.title,
+      description: data.description || "",
+      price: Number(data.price),
+      category: data.categories?.name || "unknown",
+      image: data.image_url || "/placeholder.svg",
+      rating: data.rating_rate
+        ? {
+            rate: Number(data.rating_rate),
+            count: data.rating_count || 0,
+          }
+        : undefined,
+    }
+
+    return product
+  } catch (error) {
+    console.error("Ошибка при загрузке товара:", error)
+    throw error
   }
-  
+}

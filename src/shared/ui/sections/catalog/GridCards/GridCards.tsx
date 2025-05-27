@@ -1,9 +1,9 @@
 "use client"
-import { CatalogPagination } from "@/features/catalog/pagination"
+import { CatalogPagination } from "@/features/pagination"
 import useCategories from "@/entities/category/model/useCategories"
 import useProducts from "@/entities/product/model/useProducts"
 import ProductGrid from "./ProductGrid"
-import { FilterPanel } from "@/features/catalog/filter/FilterPanel"
+import { FilterPanel } from "@/features/filter/FilterPanel"
 
 const GridCards = () => {
   // Get categories

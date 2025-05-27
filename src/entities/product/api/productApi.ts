@@ -92,20 +92,35 @@ export const getProducts = async (
     }
 
     // Преобразуем данные из Supabase в формат Product
-    const products: Product[] = (data || []).map((item: any) => ({
-      id: item.id,
-      title: item.title,
-      description: item.description || "",
-      price: Number(item.price),
-      category: item.categories?.name || "unknown",
-      image: item.image_url || "/placeholder.svg",
-      rating: item.rating_rate
-        ? {
-            rate: Number(item.rating_rate),
-            count: item.rating_count || 0,
-          }
-        : undefined,
-    }))
+// Определяем интерфейс для данных продукта
+interface ProductData {
+  id: string;
+  title: string;
+  description?: string;
+  price: number;
+  categories?: {
+    name: string;
+  };
+  image_url?: string;
+  rating_rate?: number;
+  rating_count?: number;
+}
+
+// Преобразуем данные из Supabase в формат Product
+const products: Product[] = (data || []).map((item: ProductData) => ({
+  id: item.id,
+  title: item.title,
+  description: item.description || "",
+  price: Number(item.price),
+  category: item.categories?.name || "unknown",
+  image: item.image_url || "/placeholder.svg",
+  rating: item.rating_rate
+    ? {
+        rate: Number(item.rating_rate),
+        count: item.rating_count || 0,
+      }
+    : undefined,
+}))
 
     const totalItems = count || 0
     const totalPages = Math.ceil(totalItems / limit)

@@ -138,7 +138,6 @@ export const usePaymentFlow = () => {
   }, [
     validateForm,
     generateOrderId,
-    cart.totalPrice,
     customerInfo,
     processPayment,
     selectedMethod,

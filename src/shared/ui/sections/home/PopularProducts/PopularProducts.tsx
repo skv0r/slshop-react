@@ -9,19 +9,19 @@ const PopularProducts = () => {
           imageUrl={"/dyson-card.svg"}
           title="Dyson Фен"
           description="Фен для настоящих Crocodilo Bigudilo, изветсный на весь мир своим качеством делать настощий биггуди."
-          productId="1"
+          productId="550e8400-e29b-41d4-a716-446655440001"
         />
         <Card
           imageUrl={"/dyson-card.svg"}
           title="Dyson Фен"
           description="Фен для настоящих Crocodilo Bigudilo, изветсный на весь мир своим качеством делать настощий биггуди."
-          productId="2"
+          productId="550e8400-e29b-41d4-a716-446655440001"
         />
         <Card
           imageUrl={"/dyson-card.svg"}
           title="Dyson Фен"
           description="Фен для настоящих Crocodilo Bigudilo, изветсный на весь мир своим качеством делать настощий биггуди."
-          productId="3"
+          productId="550e8400-e29b-41d4-a716-446655440001"
         />
       </div>
     </div>
